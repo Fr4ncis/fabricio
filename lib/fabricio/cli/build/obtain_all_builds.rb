@@ -25,6 +25,12 @@ module Fabricio::CLI
         return
       end
 
+      print_table(builds)
+    end
+
+    private
+
+    def print_table(builds)
       table = Terminal::Table.new do |t|
         rows = {}
 
@@ -33,7 +39,6 @@ module Fabricio::CLI
         end
 
         t.rows = rows
-        t.title = "The list of builds for application id: #{application_id}"
         t.style = {:all_separators => true}
       end
 

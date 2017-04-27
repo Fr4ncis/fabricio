@@ -16,10 +16,16 @@ module Fabricio::CLI
       build = client.build.get(application_id, version, build_number)
 
       unless build
-        puts "Application with id: #{application_id}, version: #{version}, build_number: #{build_number} not find."
+        puts "Build with application_id: #{application_id}, version: #{version}, build_number: #{build_number} not find."
         return
       end
 
+      print_table(build)
+    end
+
+    private
+
+    def print_table(build)
       table = Terminal::Table.new do |t|
         headings = []
         rows = []
@@ -35,12 +41,12 @@ module Fabricio::CLI
         end
 
         unless build.build_number.empty?
-          headings.push 'Build Number'
+          headings.push 'Build number'
           rows.push build.build_number
         end
 
         unless build.release_notes.empty?
-          headings.push 'Release Notes'
+          headings.push 'Release notes'
           rows.push build.release_notes
         end
 
@@ -51,8 +57,6 @@ module Fabricio::CLI
 
         t.headings = headings
         t.rows = [rows]
-        t.title = "Information about application with id: #{application_id}"
-        t.style = {:all_separators => true}
       end
 
       puts table

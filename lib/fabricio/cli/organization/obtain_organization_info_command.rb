@@ -13,8 +13,12 @@ module Fabricio::CLI
         config.password = password
       end
 
-      organization = client.organization.get
+      print_table(client.organization.get)
+    end
 
+    private
+
+    def print_table(organization)
       table = Terminal::Table.new do |t|
         rows = {}
         rows['ID'] = organization.id
@@ -28,7 +32,6 @@ module Fabricio::CLI
         rows['Count of Android applications'] = android_apps_count if android_apps_count > 0
 
         t.rows = rows
-        t.title = "Information about #{organization.name} organization"
       end
 
       puts table

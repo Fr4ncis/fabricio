@@ -25,6 +25,12 @@ module Fabricio::CLI
         return
       end
 
+      print_table(builds)
+    end
+
+    private
+
+    def print_table(builds)
       table = Terminal::Table.new do |t|
         rows = {}
 
