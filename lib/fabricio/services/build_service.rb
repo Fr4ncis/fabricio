@@ -26,7 +26,11 @@ module Fabricio
       def all(app_id)
         request_model = @request_model_factory.all_builds_request_model(@session, app_id)
         response = @network_client.perform_request(request_model)
-        JSON.parse(response.body)['instances'].map do |hash|
+
+        instances = JSON.parse(response.body)['instances']
+        return nil unless instances
+
+        instances.map do |hash|
           Fabricio::Model::Build.new(hash)
         end
       end
