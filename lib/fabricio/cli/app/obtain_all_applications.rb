@@ -6,8 +6,8 @@ require 'fabricio/models/organization'
 module Fabricio::CLI
   class Application < Thor
 
-    desc 'obtain_applications [USERNAME] [PASSWORD]', 'Obtains the list of all apps.'
-    def obtain_applications(username, password)
+    desc 'obtain_all_applications [USERNAME] [PASSWORD]', 'Obtains the list of all apps.'
+    def obtain_all_applications(username, password)
       client = Fabricio::Client.new do |config|
         config.username = username
         config.password = password
@@ -51,5 +51,6 @@ module Fabricio::CLI
 
       puts table
     end
+
   end
 end
