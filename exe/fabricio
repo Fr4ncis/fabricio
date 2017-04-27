@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'fabricio'
+
+Fabricio::CLI::Application.start(ARGV)
