@@ -6,8 +6,8 @@ require 'fabricio/models/organization'
 module Fabricio::CLI
   class Application < Thor
 
-    desc 'obtain_all_builds [USERNAME] [PASSWORD] [APPLICATION_ID]', 'Obtains the list of all application builds.'
-    def obtain_all_builds(username, password, application_id)
+    desc 'obtain_all_builds [APPLICATION_ID] [USERNAME] [PASSWORD]', 'Obtains the list of all application builds.'
+    def obtain_all_builds(application_id, username, password)
       client = Fabricio::Client.new do |config|
         config.username = username
         config.password = password
