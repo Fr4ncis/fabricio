@@ -1,1 +1,4 @@
 .idea/*
+encodings.xml
+Gemfile.lock
+*.gem
