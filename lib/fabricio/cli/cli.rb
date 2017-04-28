@@ -6,6 +6,7 @@ require 'fabricio/cli/build/obtain_top_versions'
 require 'fabricio/cli/app/obtain_all_applications'
 require 'fabricio/cli/app/obtain_application'
 require 'fabricio/cli/app/obtain_count_of_active_users'
+require 'fabricio/cli/app/obtain_count_of_daily_new_users'
 
 module Fabricio::CLI
   class Application < Thor
