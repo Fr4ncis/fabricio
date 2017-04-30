@@ -1,6 +1,5 @@
 require 'thor'
 require 'terminal-table'
-require 'fabricio/client/client'
 
 module Fabricio::CLI
   class Application < Thor
