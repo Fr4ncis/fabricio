@@ -75,7 +75,11 @@ module Fabricio
       def daily_active(id, start_time, end_time, build)
         request_model = @request_model_factory.daily_active_request_model(@session, id, start_time, end_time, build)
         response = @network_client.perform_request(request_model)
-        JSON.parse(response.body)['series'].map do |array|
+
+        series = JSON.parse(response.body)['series']
+        return nil unless series
+
+        series.map do |array|
           Fabricio::Model::Point.new(array)
         end
       end
