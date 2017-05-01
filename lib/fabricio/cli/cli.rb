@@ -8,6 +8,7 @@ require 'fabricio/cli/app/obtain_application_command'
 require 'fabricio/cli/app/obtain_count_of_active_users_command'
 require 'fabricio/cli/app/obtain_count_of_daily_new_users_command'
 require 'fabricio/cli/app/obtain_count_of_daily_active_users_command'
+require 'fabricio/cli/app/obtain_count_of_sessions_command'
 
 module Fabricio::CLI
   class Application < Thor
