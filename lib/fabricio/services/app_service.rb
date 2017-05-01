@@ -130,7 +130,7 @@ module Fabricio
       # @param id [String] Application identifier
       # @param start_time [String] Timestamp of the start date
       # @param end_time [String] Timestamp of the end date
-      # @param build [String] The version of the build. E.g. '4.0.1 (38)'
+      # @param builds [Array<String>] The versions of the app. E.g. ['4.0.1 (38)', '4.0.2 (45)']
       # @param count [Int] Number of issue
       # @return [Float]
       def top_issues(id, start_time, end_time, builds, count)
@@ -155,6 +155,8 @@ module Fabricio
         response = @network_client.perform_request(request_model)
 
         result = JSON.parse(response.body)
+        return nil unless result['data']['project']
+
         sessions = result['data']['project']['crashlytics']['oomSessionCounts']['timeSeries'][0]['allTimeCount']
         ooms = result['data']['project']['crashlytics']['oomCounts']['timeSeries'][0]['allTimeCount']
         1 - ooms.to_f / sessions

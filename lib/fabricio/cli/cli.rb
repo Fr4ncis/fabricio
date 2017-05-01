@@ -11,6 +11,7 @@ require 'fabricio/cli/app/obtain_count_of_daily_active_users_command'
 require 'fabricio/cli/app/obtain_count_of_sessions_command'
 require 'fabricio/cli/app/obtain_count_of_crashes_command'
 require 'fabricio/cli/app/obtain_application_crashfree_command'
+require 'fabricio/cli/app/obtain_oom_free_command'
 
 module Fabricio::CLI
   class Application < Thor
