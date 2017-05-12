@@ -48,7 +48,11 @@ module Fabricio
       def active_now(id)
         request_model = @request_model_factory.active_now_request_model(@session, id)
         response = @network_client.perform_request(request_model)
-        JSON.parse(response.body)['cardinality']
+
+        cardinality = JSON.parse(response.body)['cardinality']
+        return nil unless cardinality
+
+        cardinality
       end
 
       # Obtains the count of daily new users
@@ -60,7 +64,11 @@ module Fabricio
       def daily_new(id, start_time, end_time)
         request_model = @request_model_factory.daily_new_request_model(@session, id, start_time, end_time)
         response = @network_client.perform_request(request_model)
-        JSON.parse(response.body)['series'].map do |array|
+
+        series = JSON.parse(response.body)['series']
+        return nil unless series
+
+        series.map do |array|
           Fabricio::Model::Point.new(array)
         end
       end
@@ -94,7 +102,11 @@ module Fabricio
       def total_sessions(id, start_time, end_time, build)
         request_model = @request_model_factory.total_sessions_request_model(@session, id, start_time, end_time, build)
         response = @network_client.perform_request(request_model)
-        JSON.parse(response.body)['sessions']
+
+        sessions = JSON.parse(response.body)['sessions']
+        return nil unless sessions
+
+        sessions
       end
 
       # Obtains the number of crashes
@@ -107,7 +119,11 @@ module Fabricio
       def crashes(id, start_time, end_time, builds)
         request_model = @request_model_factory.crash_count_request_model(id, start_time, end_time, builds)
         response = @network_client.perform_request(request_model)
-        JSON.parse(response.body)['data']['project']['crashlytics']['scalars']['crashes']
+
+        project = JSON.parse(response.body)['data']['project']
+        return nil unless project
+
+        project['crashlytics']['scalars']['crashes']
       end
 
       # Obtains application crashfree. It's calculated using a simple formula:
@@ -136,7 +152,11 @@ module Fabricio
       def top_issues(id, start_time, end_time, builds, count)
         request_model = @request_model_factory.top_issues_request_model(id, start_time, end_time, builds, count)
         response = @network_client.perform_request(request_model)
-        JSON.parse(response.body)['data']['project']['crashlytics']['_issues4Eg1Tv']['edges'].map { |edge| edge['node'] }
+
+        project = JSON.parse(response.body)['data']['project']
+        return nil unless project
+
+        project['crashlytics']['_issues4Eg1Tv']['edges'].map { |edge| edge['node'] }
       end
 
       # Obtains application OOM-free (Out of Memory).
@@ -154,11 +174,11 @@ module Fabricio
         request_model = @request_model_factory.oom_count_request_model(id, days, builds)
         response = @network_client.perform_request(request_model)
 
-        result = JSON.parse(response.body)
-        return nil unless result['data']['project']
+        project = JSON.parse(response.body)['data']['project']
+        return nil unless project
 
-        sessions = result['data']['project']['crashlytics']['oomSessionCounts']['timeSeries'][0]['allTimeCount']
-        ooms = result['data']['project']['crashlytics']['oomCounts']['timeSeries'][0]['allTimeCount']
+        sessions = project['crashlytics']['oomSessionCounts']['timeSeries'][0]['allTimeCount']
+        ooms = project['crashlytics']['oomCounts']['timeSeries'][0]['allTimeCount']
         1 - ooms.to_f / sessions
       end
     end

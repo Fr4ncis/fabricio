@@ -61,7 +61,11 @@ module Fabricio
       def top_versions(app_id, start_time, end_time)
         request_model = @request_model_factory.top_versions_request_model(@session, app_id, start_time, end_time)
         response = @network_client.perform_request(request_model)
-        JSON.parse(response.body)['builds']
+
+        builds = JSON.parse(response.body)['builds']
+        return nil unless builds
+
+        builds
       end
     end
   end
